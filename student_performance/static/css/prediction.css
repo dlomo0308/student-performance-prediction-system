@@ -1,0 +1,50 @@
+/* HOME PAGE LANDING CSS */
+.contain{
+    padding-top: 180px;
+  }
+.items-center{
+    align-items: center;
+  }
+  .landing{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      height: 100vh;
+      margin-top: -200px;
+  
+    }
+    
+    .landingText h1{
+      font-size: 3vw;
+      margin: 0 !important;
+    }
+    
+    .landingText h3{
+      margin: 6px !important;
+      font-size: 20px;
+      opacity: 0.6;
+      line-height: 30px;
+    }
+    
+    .landingText .btn{
+      margin-top: 30px;
+      padding: 14px 20px 14px 20px;
+      background-color: #2f8be0;
+      border-radius: 45px;
+      text-align: center;
+    }
+    
+    .landingText .btn a{
+      font-size: 1.2vw;
+      color: #fff;
+      text-decoration: none;
+    }
+    
+    .landingImage img{
+      width: 28vw;
+      margin-top: 100px;
+    }
+    .landingText .btn:hover {
+      background: #002f5a;
+    }

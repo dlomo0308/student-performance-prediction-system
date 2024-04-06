@@ -1,0 +1,56 @@
+/* These styles are generated from project.scss. */
+body{
+  margin: 0;
+  top: 0;
+  background-color: #f1f1f1;
+}
+
+.alert-debug {
+  color: black;
+  background-color: white;
+  border-color: #d6e9c6;
+}
+
+.alert-error {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #eed3d7;
+}
+
+/* NAVBAR STYLING */
+.left-navv{
+  display: flex;
+  margin-left: 800px;
+}
+.mb-1 .navbar{
+  background-color: #0c0078;
+}
+/* .mb-1 .navbar .collapse{
+  
+} */
+.mb-1 .navbar .navbar-brand{
+  display: -ms-flexbox;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 700;
+  color: #ffd000;
+  font-size: 24px;
+  line-height: 125%;
+}
+.mb-1 .navbar .navbar-brand:hover{
+  color: #c4a103;
+}
+/* .mb-1 .navbar .navbar-toggler-icon{
+  color: #6b0403;
+} */
+.mb-1 .collapse ul li .nav-link{
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+}
+.mb-1 .collapse ul li .nav-link:hover{
+  color: #c1b86a;
+}
+
+

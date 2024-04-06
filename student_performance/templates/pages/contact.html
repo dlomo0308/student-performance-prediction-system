@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+        <div class="landing">
+            <!-- <h2 class="col-3">Contact Us</h2> -->
+            <form action="{% url 'contact' %}" method="post" class="col-7 contain">
+                <h2 style="font-style: italic;">We would like to here from you!!!</h2>
+                <div class="form-group">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+
+            <div class="landingImage" data-aos="fade-down" data-aos-duration="2000">
+                <img src="../static/images/bg1.png" alt="">
+            </div>  
+        </div>
+            
+          
+        </div>
+</div>
+
+
+
+
+
+{% endblock %}
