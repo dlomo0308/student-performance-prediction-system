@@ -1,4 +1,6 @@
+from typing import Any
 from django.contrib import admin
+from django.http import HttpRequest
 from .models import Student
 from .utils import generate_student_number  # Import the generate_student_number function
 
@@ -17,5 +19,12 @@ class StudentAdmin(admin.ModelAdmin):
         initial['G1'] = 0  # Add initial data for the G1 field
         initial['G2'] = 0  # Add initial data for the G2 field
         return initial
+    
+    # readonly_fields = ('student_id',)
+    
+    # def get_readonly_fields(self, request, obj=None):
+    #     if obj:
+    #         return self.readonly_fields
+    #     return self.readonly_fields
 
 admin.site.register(Student, StudentAdmin)
