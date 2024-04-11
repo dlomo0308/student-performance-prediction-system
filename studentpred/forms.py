@@ -33,6 +33,14 @@ class PredictionForm(forms.Form):
         ('Excellent', 'Excellent'),
     ]
 
+    SUB_CHOICES = [
+        ('maths', 'Maths'),
+        ('science', 'Science'),
+        ('computer', 'Computers'),
+    ]
+
+    subject = forms.ChoiceField(label='Choose Subject', choices=SUB_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}),
+        required=True)
     travel_time = forms.ChoiceField(label='Home to School Travel Time', choices=TRAVEL_TIME_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}),
         required=True)
     free_time = forms.ChoiceField(label='Home to School Travel Time', choices=FREE_TIME_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}),

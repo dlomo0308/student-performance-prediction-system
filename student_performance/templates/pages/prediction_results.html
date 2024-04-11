@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1>Results Page</h1>    
+    <!-- Display the predicted grade if available -->
+    {% if predicted_grade %}
+    <div id="prediction-results" class="mt-4">
+        <h2>Predicted Grade: {{ predicted_grade }}</h2>
+    {% elif error_message %}
+        <h2>Error: {{ error_message }}</h2>
+    </div>
+    {% endif %}
+</div>
+
+
+
+{% endblock %}

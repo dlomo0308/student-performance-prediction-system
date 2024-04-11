@@ -32,6 +32,7 @@ urlpatterns = [
     path('prediction/', student_views.prediction, name='prediction'),
     path('mydata/', student_views.my_previous_data, name='mydata'),
     path('myhistory/', student_views.view_history, name='myhistory'),
+    path('predictionresults/', student_views.prediction_results, name='predictionresults'),
     path('contact/', users_views.contact, name='contact'),
     
 
