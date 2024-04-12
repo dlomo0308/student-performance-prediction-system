@@ -3,11 +3,19 @@
 {% block content %}
 
 <div class="container mt-5">
-    <h1>Results Page</h1>    
     <!-- Display the predicted grade if available -->
-    {% if predicted_grade %}
+    {% if prediction_data %}
     <div id="prediction-results" class="mt-4">
-        <h2>Predicted Grade: {{ predicted_grade }}</h2>
+        <h2>Your Predicted Results:</h2>
+        <p class="lead">In <strong>{{ prediction_data.form_data.subject }}</strong>, your predicted grade is <strong>{{ prediction_data.prediction_result }}</strong>.</p>
+        
+        <h4>Form Data:</h4>
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Subject:</strong> {{ prediction_data.form_data.subject }}</li>
+            <li class="list-group-item"><strong>Travel Time:</strong> {{ prediction_data.form_data.travel_time }}</li>
+            <li class="list-group-item"><strong>Free Time:</strong> {{ prediction_data.form_data.free_time }}</li>
+            <!-- Add more form data here -->
+        </ul>
     {% elif error_message %}
         <h2>Error: {{ error_message }}</h2>
     </div>

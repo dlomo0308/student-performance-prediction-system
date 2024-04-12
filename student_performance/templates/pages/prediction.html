@@ -11,19 +11,7 @@
         <!-- Prediction Form -->
         <form id="prediction-form" method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-                <!-- <div class="form-group row">
-                    <label for="traveltime" class="col-sm-3 col-form-label">Home to School Travel Time:</label>
-                    <div class="col-sm-9">
-                        <select id="traveltime" name="traveltime" class="form-control" required>
-                            <option value="1">&lt;15 min.</option>
-                            <option value="2">15 to 30 min.</option>
-                            <option value="3">30 min. to 1 hour</option>
-                            <option value="4">&gt;1 hour</option>
-                        </select>
-                    </div>
-                </div> -->
-                
+            {{ form.as_p }}                
                 <div class="form-group row">
                   <div class="col-sm-10 offset-sm-2">
                     <button type="submit" class="btn btn-primary">Predict</button>

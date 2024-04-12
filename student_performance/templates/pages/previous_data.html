@@ -3,42 +3,59 @@
 {% block content %}
 
 <div class="container mt-5">
-    <div id="fetched-data-container">
-        <h2 style="margin-bottom: 20px;">Your Academic records!!!</h2>
-        <table class="table">
-            <thead class="thead-dark">
-                <tr>
-                    <!-- <th>#</th> -->
-                    <th>Student ID</th>
-                    <th>Name</th>
-                    <th>Failures</th>
-                    <th>Absences</th>
-                    <th>G1</th>
-                    <th>G2</th>
-                    <!-- Add other column headers as needed -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for student in student_data %}
-                <tr class="">
-                    <!-- <td>{{ forloop.counter }}</td> -->
-                    <td>{{ student.student_id }}</td>
-                    <td>{{ student.student_name }}</td>
-                    <td>{{ student.failures }}</td>
-                    <td>{{ student.absences }}</td>
-                    <td>{{ student.G1 }}</td>
-                    <td>{{ student.G2 }}</td>
-                    <!-- Display additional student data as needed -->
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3">We don't have your data yet.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>     
+
+    <!-- Performance Data Table -->
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Subject</th>
+                <th>Extra Lessons</th>
+                <th>Failures</th>
+                <th>Absences</th>
+                <th>G1</th>
+                <th>G2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Math Performance Data -->
+            {% if math_data %}
+            <tr>
+                <td>Math</td>
+                <td>{{ math_data.extra_lessons }}</td>
+                <td>{{ math_data.failures }}</td>
+                <td>{{ math_data.absences }}</td>
+                <td>{{ math_data.G1 }}</td>
+                <td>{{ math_data.G2 }}</td>
+            </tr>
+            {% endif %}
+
+            <!-- Science Performance Data -->
+            {% if science_data %}
+            <tr>
+                <td>Science</td>
+                <td>{{ science_data.extra_lessons }}</td>
+                <td>{{ science_data.failures }}</td>
+                <td>{{ science_data.absences }}</td>
+                <td>{{ science_data.G1 }}</td>
+                <td>{{ science_data.G2 }}</td>
+            </tr>
+            {% endif %}
+
+            <!-- Computer Performance Data -->
+            {% if computer_data %}
+            <tr>
+                <td>Computer</td>
+                <td>{{ computer_data.extra_lessons }}</td>
+                <td>{{ computer_data.failures }}</td>
+                <td>{{ computer_data.absences }}</td>
+                <td>{{ computer_data.G1 }}</td>
+                <td>{{ computer_data.G2 }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
 </div>
+
 
 
 

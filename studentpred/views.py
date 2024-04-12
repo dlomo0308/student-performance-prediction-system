@@ -27,18 +27,23 @@ file_path = os.path.join(directory, file_name)
 @login_required
 def prediction(request):
     form = PredictionForm()
-    
+
     if request.method == 'POST':
         form = PredictionForm(request.POST)
-        # predicted_grade = None  # Initialize predicted_grade variable
-        if form.is_valid():        
+
+        if form.is_valid():
             # Retrieve student's existing data from the database
-            student_data = Student.objects.filter(user=request.user).values('Mother_Education','sex', 'Father_Education').first()
+            student_data = Student.objects.filter(user=request.user).values('Mother_Education', 'sex', 'Father_Education').first()
 
             # Retrieve selected subject from the form
             subject = form.cleaned_data['subject']
 
-             # Retrieve subject-specific data based on the selected subject
+            # Check if the user has already made a prediction for this subject
+            if PredictionHistory.objects.filter(student=request.user.student, subject=subject).exists():
+                messages.error(request, f"You have already made a prediction for {subject}.")
+                return redirect('prediction')
+
+            # Retrieve subject-specific data based on the selected subject
             if subject == 'maths':
                 subject_data = MathPerformance.objects.filter(student=request.user.student).values('extra_lessons', 'failures', 'absences', 'G1', 'G2').first()
             elif subject == 'science':
@@ -47,12 +52,10 @@ def prediction(request):
                 subject_data = ComputerPerformance.objects.filter(student=request.user.student).values('extra_lessons', 'failures', 'absences', 'G1', 'G2').first()
             # Add more elif conditions for other subjects if needed
 
-
             if not student_data:
                 messages.error(request, "No Student Data")
             elif not subject_data:
-                messages.error(request, "No Subject data")
-            
+                messages.error(request, "No Subject Data")
 
             if student_data and subject_data:
                 # Retrieve the prediction form data
@@ -63,26 +66,27 @@ def prediction(request):
                 romantic = form.cleaned_data['romantic']
                 fam_rel = form.cleaned_data['fam_rel']
                 health_status = form.cleaned_data['health_status']
-                
+
                 # Prepare data for prediction
                 prediction_input = pd.DataFrame({
-                                                'sex': student_data['sex'],
-                                                'failures': subject_data['failures'],
-                                                'extra_lessons': subject_data['extra_lessons'],
-                                                'internet': internet,
-                                                'romantic': romantic,
-                                                'absences': subject_data['absences'],
-                                                'G1': subject_data['G1'],
-                                                'G2': subject_data['G2'],
-                                                'M_edu': student_data['Mother_Education'],
-                                                'F_edu': student_data['Father_Education'],
-                                                'fam_rel': fam_rel,
-                                                'free_time': free_time,
-                                                'health_status': health_status,
-                                                'travel_time': travel_time,
-                                                'study_time': study_time
-                                            }, index=[0])
-                prediction_input.columns=['sex', 'failures', 'extra_lessons', 'internet', 'romantic', 'absences', 'G1', 'G2', 'M_edu', 'F_edu','fam_rel', 'free_time', 'health_status', 'travel_time', 'study_time']
+                    'sex': student_data['sex'],
+                    'failures': subject_data['failures'],
+                    'extra_lessons': subject_data['extra_lessons'],
+                    'internet': internet,
+                    'romantic': romantic,
+                    'absences': subject_data['absences'],
+                    'G1': subject_data['G1'],
+                    'G2': subject_data['G2'],
+                    'M_edu': student_data['Mother_Education'],
+                    'F_edu': student_data['Father_Education'],
+                    'fam_rel': fam_rel,
+                    'free_time': free_time,
+                    'health_status': health_status,
+                    'travel_time': travel_time,
+                    'study_time': study_time
+                }, index=[0])
+                prediction_input.columns = ['sex', 'failures', 'extra_lessons', 'internet', 'romantic', 'absences', 'G1', 'G2', 'M_edu', 'F_edu', 'fam_rel', 'free_time', 'health_status', 'travel_time', 'study_time']
+
                 # Load the trained ML model from the pickle file
                 with open(file_path, 'rb') as file:
                     ml_model = joblib.load(file)
@@ -91,10 +95,9 @@ def prediction(request):
 
                 # Ensure the prediction input DataFrame has the same columns as the encoded DataFrame
                 prediction_input = prediction_input.reindex(columns=encoded_column_names, fill_value=0)
-                # prediction_input = prediction_input.reindex(columns=encoded_column_names, fill_value=0, axis=1)
-                    
+
                 # Make prediction
-                predicted_grade = ml_model.predict(prediction_input)  
+                predicted_grade = ml_model.predict(prediction_input)
 
                 if predicted_grade is not None:
                     # Save the prediction result and form data to the database
@@ -108,15 +111,11 @@ def prediction(request):
                         romantic=romantic,
                         fam_rel=fam_rel,
                         health_status=health_status,
-                        prediction_result=predicted_grade[0]  # Assuming prediction_result is a single value
+                        prediction_result=predicted_grade[0]  # Assuming`prediction_result` is a single value
                     )
                     prediction_history.save()
 
-                     # Store the prediction data in the session
-                    # request.session['prediction_data'] = {
-                    #     'form_data': form.cleaned_data,
-                    #     'prediction_result': predicted_grade
-                    # }
+                    # Store the prediction data in the session
                     request.session['prediction_data'] = {
                         'form_data': {
                             'subject': subject,
@@ -133,57 +132,54 @@ def prediction(request):
 
                     # Use the predicted_grade value
                     messages.success(request, 'Prediction Was Successful')
-                    context = {'form': form, 'predicted_grade': predicted_grade}
-                    return render(request, 'pages/prediction_results.html', context)
-                    
+                    # context = {'predicted_grade': predicted_grade}
+                    return redirect('prediction_results')
+                    # return render(request, 'pages/prediction_results.html', context)
+
                 else:
                     # Handle the case when predicted_grade is None
-                    context = messages.error(request, 'Failed to perform prediction')  
-                    return render(request, 'pages/prediction.html',context)        
+                    messages.error(request, 'Failed to perform prediction')
+                    return redirect('prediction')  # Redirect back to the prediction page
 
-            else:
-                context = {'form': form}
-                # messages.error(request, "No Student Data or Subject data")
-                return render(request, 'pages/prediction.html',context)
         else:
             messages.error(request, "Invalid Form")
-            return render(request, 'pages/prediction.html', context)
-    else:
-        messages.error(request, "Method is not POST")
+
     context = {'form': form}
-    return render(request, 'pages/prediction.html',context)
+    return render(request, 'pages/prediction.html', context)
      
 
 
 # my academic data view
 @login_required
 def my_previous_data(request):
-    # Get the current user
-    user = request.user
+    # Retrieve the math performance data for the current student
+    math_data = MathPerformance.objects.filter(student__user=request.user).first()
+    # Retrieve the science performance data for the current student
+    science_data = SciencePerformance.objects.filter(student__user=request.user).first()
+    # Retrieve the computer performance data for the current student
+    computer_data = ComputerPerformance.objects.filter(student__user=request.user).first()
 
-    # Check if the user is authenticated
-    student_data = Student.objects.filter(user=request.user)
-    context = {'student_data': student_data}
+    context = {
+        'math_data': math_data,
+        'science_data': science_data,
+        'computer_data': computer_data
+    }
     return render(request, 'pages/previous_data.html', context)
-    
+
 
 def view_history(request):
-    return render(request, 'pages/history.html')
+    student = request.user.student
+    history = PredictionHistory.objects.filter(student=student).order_by('prediction_date')
+    context = {'history':history}
+    return render(request, 'pages/history.html', context)
 
 def prediction_results(request):
     prediction_data = request.session.get('prediction_data')
+    context = {'prediction_data': prediction_data}
+    return render(request, 'pages/prediction_results.html', context)
 
-    if prediction_data:
-        form_data = prediction_data['form_data']
-        prediction_result = prediction_data['prediction_result']
 
-        # Additional processing or information retrieval based on the form data or prediction result
-        # ...
-
-        context = {
-            'form_data': form_data,
-            'prediction_result': prediction_result,
-            # Additional context variables
-        }
-        return render(request, 'pages/prediction_results.html', context)
-    return render('prediction')
+# def prediction_results(request):
+#     predicted_data = request.session.get('prediction_data', {}).get('prediction_result')
+#     context = {'predicted_data': predicted_data}
+#     return render(request, 'pages/prediction_results.html', context)

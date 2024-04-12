@@ -3,7 +3,33 @@
 {% block content %}
 
 <div class="container mt-5">
-    <h1>View History page</h1>    
+    <h2>View History page</h2> 
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th>Subject</th>
+                <th>Health Status</th>
+                <th>Prediction Date</th>
+                <th>Prediction Results</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for prediction in history %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ prediction.subject }}</td>
+                <td>{{ prediction.health_status }}</td>
+                <td>{{ prediction.prediction_date }}</td>
+                <td>{{ prediction.prediction_result }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="color: rgb(182, 67, 28);">Sorry!!! You have no diagnosis history.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>   
 </div>
 
 
