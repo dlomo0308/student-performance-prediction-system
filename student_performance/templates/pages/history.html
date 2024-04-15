@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             {% for prediction in history %}
-            <tr>
+            <tr class="{% if prediction.prediction_result < 10 %}table-danger{% else %}table-success{% endif %}">
                 <td>{{ forloop.counter }}</td>
                 <td>{{ prediction.subject }}</td>
                 <td>{{ prediction.health_status }}</td>
@@ -25,11 +25,21 @@
             </tr>
             {% empty %}
             <tr>
-                <td colspan="6" style="color: rgb(182, 67, 28);">Sorry!!! You have no diagnosis history.</td>
+                <td colspan="6" style="color: rgb(182, 67, 28);">Sorry!!! You have no prediction history.</td>
             </tr>
             {% endfor %}
         </tbody>
-    </table>   
+    </table>  
+    
+    <!-- <div class="info-box alert-danger">
+        <div class="info-icon">
+          <i class="bi bi-info-circle-fill"></i>
+        </div>
+        <div class="info-text">
+          We however recommend you to work on the subjects displayed in red background.
+        </div> 
+      </div> -->
+    
 </div>
 
 

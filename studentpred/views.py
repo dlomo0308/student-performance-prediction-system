@@ -10,17 +10,23 @@ import pickle, joblib
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, OrdinalEncoder, LabelEncoder
 from django.contrib import messages
-
 import os
+from django.conf import settings
+from config.settings.base import NOTEBOOK_DIR
+
 
 # Define the directory path
-directory = r"C:\Users\sjr\OneDrive\Desktop\COMP SCIENCE\sjrCodes\py\DJANGO\student_performance\notebook"
+# directory = r"C:\Users\sjr\OneDrive\Desktop\COMP SCIENCE\sjrCodes\py\DJANGO\student_performance\notebook"
+
+
 
 # Define the file name
 file_name = "svm_modell.pkl"
 
 # Concatenate directory path and file name
-file_path = os.path.join(directory, file_name)
+# file_path = os.path.join(directory, file_name)
+# file_path = os.path.join(settings.BASE_DIR, settings.NOTEBOOK_DIR, file_name)
+file_path = os.path.join(NOTEBOOK_DIR, file_name)
 
 # Create your views here.
 @csrf_exempt
@@ -40,8 +46,9 @@ def prediction(request):
 
             # Check if the user has already made a prediction for this subject
             if PredictionHistory.objects.filter(student=request.user.student, subject=subject).exists():
-                messages.error(request, f"You have already made a prediction for {subject}.")
-                return redirect('prediction')
+                # messages.error(request, f"You have already made a prediction for {subject}.")
+                context = {'already_done': f"You have already made a prediction for {subject}.", 'form':form}
+                return render(request, 'pages/prediction.html', context)
 
             # Retrieve subject-specific data based on the selected subject
             if subject == 'maths':
@@ -175,7 +182,11 @@ def view_history(request):
 
 def prediction_results(request):
     prediction_data = request.session.get('prediction_data')
-    context = {'prediction_data': prediction_data}
+    if prediction_data:
+        predicted_grade = prediction_data.get('prediction_result')
+        if predicted_grade:
+            predicted_grade = predicted_grade[0]
+    context = {'prediction_data': prediction_data, 'predicted_grade':predicted_grade}
     return render(request, 'pages/prediction_results.html', context)
 
 

@@ -38,7 +38,11 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}" style="background-color: #99002b; border: 1px solid #99002b; border-radius: 90%; padding: 7px;">AcaDemiks</a>
+        <!-- <a class="navbar-brand" href="{% url 'home' %}" style="background-color: #99002b; border: 1px solid #99002b; border-radius: 90%; padding: 7px;">AcaDemiks</a> -->
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img src="../static/images/cap2.png" alt="">
+          AcaDemiks
+        </a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
@@ -61,8 +65,8 @@
                    Prediction</a>
                 <div class="dropdown-menu">
                   <a class="dropdown-item" href="{% url 'prediction' %}">Perform Prediction</a>
+                  <a class="dropdown-item" href="{% url 'prediction_results' %}">View Prediction Results</a>
                   <a class="dropdown-item" href="{% url 'mydata' %}">My Academic Data</a>
-                  <a class="dropdown-item" href="{% url 'prediction_results' %}">My Prediction Results</a>
                   <a class="dropdown-item" href="{% url 'myhistory' %}">View History</a>
                 </div>
               </li>

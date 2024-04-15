@@ -48,3 +48,28 @@
     .landingText .btn:hover {
       background: #002f5a;
     }
+
+
+
+
+    .info-box {
+      background-color: #fce4ec;
+      padding: 10px;
+      margin-bottom: 20px;
+      margin-top: 20%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+   .info-icon {
+      color: #e91e63;
+      font-size: 32px;
+      margin-right: 20px;
+    }
+  
+   .info-text {
+      font-size: 18px;
+      font-weight: bold;
+      color: #e91e63;
+    }

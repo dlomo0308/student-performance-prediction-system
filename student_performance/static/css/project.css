@@ -20,7 +20,7 @@ body{
 /* NAVBAR STYLING */
 .left-navv{
   display: flex;
-  margin-left: 800px;
+  margin-left: 600px;
 }
 .mb-1 .navbar{
   background-color: #0c0078;
@@ -40,6 +40,11 @@ body{
 }
 .mb-1 .navbar .navbar-brand:hover{
   color: #c4a103;
+}
+.navbar-brand img{
+  border-radius: 50%;
+  height: 18%;
+  width: 18%;
 }
 /* .mb-1 .navbar .navbar-toggler-icon{
   color: #6b0403;

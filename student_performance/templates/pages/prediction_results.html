@@ -7,18 +7,38 @@
     {% if prediction_data %}
     <div id="prediction-results" class="mt-4">
         <h2>Your Predicted Results:</h2>
-        <p class="lead">In <strong>{{ prediction_data.form_data.subject }}</strong>, your predicted grade is <strong>{{ prediction_data.prediction_result }}</strong>.</p>
-        
+        <h5 class="mt-3">In 
+            <strong style="text-transform: uppercase; text-decoration: underline;color: #f56b02;">{{ prediction_data.form_data.subject }}</strong>, your predicted grade is 
+        <strong class="{% if predicted_grade < 10 %}text-danger{% else %}text-success{% endif %}">{{ predicted_grade }}</strong>.</h5>
+        <br>
         <h4>Form Data:</h4>
-        <ul class="list-group">
-            <li class="list-group-item"><strong>Subject:</strong> {{ prediction_data.form_data.subject }}</li>
-            <li class="list-group-item"><strong>Travel Time:</strong> {{ prediction_data.form_data.travel_time }}</li>
-            <li class="list-group-item"><strong>Free Time:</strong> {{ prediction_data.form_data.free_time }}</li>
-            <!-- Add more form data here -->
-        </ul>
+        <table class="table table-striped">
+            <thead class="{% if predicted_grade < 10 %}table-danger{% else %}table-success{% endif %}">
+                <tr>
+                    <th>Subject</th>
+                    <th>Travel Time (mins)</th>
+                    <th>Free Time</th>
+                    <th>Study Time (hrs)</th>
+                    <th>Home Internet</th>
+                    <th>Family Relationship</th>
+                    <th>Health Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ prediction_data.form_data.subject }}</td>
+                    <td>{{ prediction_data.form_data.travel_time }}</td>
+                    <td>{{ prediction_data.form_data.free_time }}</td>
+                    <td>{{ prediction_data.form_data.study_time }}</td>
+                    <td>{{ prediction_data.form_data.internet }}</td>
+                    <td>{{ prediction_data.form_data.fam_rel }}</td>
+                    <td>{{ prediction_data.form_data.health_status }}</td>
+                </tr>
+            </tbody>
+        </table> 
+       
     {% elif error_message %}
         <h2>Error: {{ error_message }}</h2>
-    </div>
     {% endif %}
 </div>
 

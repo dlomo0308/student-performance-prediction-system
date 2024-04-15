@@ -1,7 +1,7 @@
 from typing import Any
 from django.contrib import admin
 from django.http import HttpRequest
-from .models import Student, MathPerformance, SciencePerformance, ComputerPerformance
+from .models import Student, MathPerformance, SciencePerformance, ComputerPerformance, PredictionHistory
 from .utils import generate_student_number  # Import the generate_student_number function
 
 class StudentAdmin(admin.ModelAdmin):
@@ -27,3 +27,7 @@ admin.site.register(SciencePerformance, ScienceAdmin)
 class ComputerAdmin(admin.ModelAdmin):
     list_display = ('student', 'extra_lessons', 'failures', 'absences', 'G1', 'G2')
 admin.site.register(ComputerPerformance, ComputerAdmin)
+
+class PredictionHistoryAdmin(admin.ModelAdmin):
+    list_display = ('student', 'subject', 'prediction_date', 'prediction_result')
+admin.site.register(PredictionHistory, PredictionHistoryAdmin)

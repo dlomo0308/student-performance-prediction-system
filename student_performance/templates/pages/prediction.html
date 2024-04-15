@@ -18,10 +18,12 @@
                   </div>
                 </div>
         </form>
-        
-
-        
     </div>
+    {% if already_done %}
+    <script>
+            alert("{{ already_done }}");
+    </script>
+    {% endif %}
 </body>
 </html>
 

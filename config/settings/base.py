@@ -5,10 +5,16 @@ Base settings to build other settings files upon.
 from pathlib import Path
 
 import environ
+import os
+
 
 # student_performance/
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 APPS_DIR = BASE_DIR / "student_performance"
+
+# Define the notebook directory
+# NOTEBOOK_DIR = BASE_DIR/ 'notebook'
+NOTEBOOK_DIR = os.path.join(BASE_DIR, 'notebook')
 
 env = environ.Env()
 
