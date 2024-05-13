@@ -43,8 +43,8 @@ class Student(models.Model):
     sex = models.CharField(max_length=1, choices=SEX_CHOICES)
     address = models.CharField(max_length=3, choices=ADDRESS_CHOICES) # no longer in dataframe but we will record it
     # famsize = models.CharField(max_length=3, choices=FAMSIZE_CHOICES)
-    Mother_Education = models.IntegerField(choices=EDU_CHOICES)
-    Father_Education = models.IntegerField(choices=EDU_CHOICES)
+    Mother_Education = models.CharField(max_length=100, choices=EDU_CHOICES)
+    Father_Education = models.CharField(max_length=100, choices=EDU_CHOICES)
     Mother_job = models.CharField(max_length=20, choices=JOB_CHOICES)
     Father_job = models.CharField(max_length=20, choices=JOB_CHOICES)
 
@@ -68,6 +68,22 @@ class SciencePerformance(models.Model):
     G2 = models.PositiveIntegerField(validators=[MaxValueValidator(20)])
     
 class ComputerPerformance(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    extra_lessons = models.CharField(max_length=3, choices=EXTRA_LESSONS_CHOICES)
+    failures = models.PositiveIntegerField(validators=[MaxValueValidator(4)])
+    absences = models.PositiveIntegerField(validators=[MaxValueValidator(90)])
+    G1 = models.PositiveIntegerField(validators=[MaxValueValidator(20)])
+    G2 = models.PositiveIntegerField(validators=[MaxValueValidator(20)])
+
+class HistoryPerformance(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    extra_lessons = models.CharField(max_length=3, choices=EXTRA_LESSONS_CHOICES)
+    failures = models.PositiveIntegerField(validators=[MaxValueValidator(4)])
+    absences = models.PositiveIntegerField(validators=[MaxValueValidator(90)])
+    G1 = models.PositiveIntegerField(validators=[MaxValueValidator(20)])
+    G2 = models.PositiveIntegerField(validators=[MaxValueValidator(20)])
+
+class GeographyPerformance(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     extra_lessons = models.CharField(max_length=3, choices=EXTRA_LESSONS_CHOICES)
     failures = models.PositiveIntegerField(validators=[MaxValueValidator(4)])

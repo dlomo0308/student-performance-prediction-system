@@ -31,16 +31,16 @@
         </tbody>
     </table>  
     
-    <!-- <div class="info-box alert-danger">
-        <div class="info-icon">
-          <i class="bi bi-info-circle-fill"></i>
-        </div>
-        <div class="info-text">
-          We however recommend you to work on the subjects displayed in red background.
-        </div> 
-      </div> -->
-    
 </div>
+
+{% if no_prediction_history %}
+    <script>
+        // Display a JavaScript info popup
+        window.onload = function() {
+            alert("You are not registered as a student, meaning you don't have any history.");
+        };
+    </script>
+{% endif %}
 
 
 

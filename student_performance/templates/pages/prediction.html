@@ -9,7 +9,7 @@
         
 
         <!-- Prediction Form -->
-        <form id="prediction-form" method="post">
+        <!-- <form id="prediction-form" method="post">
             {% csrf_token %}
             {{ form.as_p }}                
                 <div class="form-group row">
@@ -17,6 +17,63 @@
                     <button type="submit" class="btn btn-primary">Predict</button>
                   </div>
                 </div>
+        </form> -->
+
+        <form>
+          <div class="form-group row">
+            <label for="{{ form.subject.id_for_label }}" class="col-sm-3 col-form-label">{{ form.subject.label }}</label>
+            <div class="col-sm-9">
+              {{ form.subject }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.travel_time.id_for_label }}" class="col-sm-3 col-form-label">{{ form.travel_time.label }}</label>
+            <div class="col-sm-9">
+              {{ form.travel_time }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.free_time.id_for_label }}" class="col-sm-3 col-form-label">{{ form.free_time.label }}</label>
+            <div class="col-sm-9">
+              {{ form.free_time }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.study_time.id_for_label }}" class="col-sm-3 col-form-label">{{ form.study_time.label }}</label>
+            <div class="col-sm-9">
+              {{ form.study_time }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.internet.id_for_label }}" class="col-sm-3 col-form-label">{{ form.internet.label }}</label>
+            <div class="col-sm-9">
+              {{ form.internet }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.romantic.id_for_label }}" class="col-sm-3 col-form-label">{{ form.romantic.label }}</label>
+            <div class="col-sm-9">
+              {{ form.romantic }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.fam_rel.id_for_label }}" class="col-sm-3 col-form-label">{{ form.fam_rel.label }}</label>
+            <div class="col-sm-9">
+              {{ form.fam_rel }}
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="{{ form.health_status.id_for_label }}" class="col-sm-3 col-form-label">{{ form.health_status.label }}</label>
+            <div class="col-sm-9">
+              {{ form.health_status }}
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2">
+              <button type="submit" class="btn btn-primary">Predict</button>
+            </div>
+          </div>
         </form>
     </div>
     {% if already_done %}
