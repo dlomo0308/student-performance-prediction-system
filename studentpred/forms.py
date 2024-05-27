@@ -41,7 +41,7 @@ class PredictionForm(forms.Form):
         ('geo', 'Geography'),
     ]
 
-    subject = forms.ChoiceField(label='Choose Subject', choices=SUB_CHOICES, widget=forms.Select(attrs={'class': 'form-control d-inline-flex'}),
+    subject = forms.ChoiceField(label='Choose Subject', choices=SUB_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}),
         required=True)
     travel_time = forms.ChoiceField(label='Home to School Travel Time', choices=TRAVEL_TIME_CHOICES, widget=forms.Select(attrs={'class': 'form-control'}),
         required=True)
